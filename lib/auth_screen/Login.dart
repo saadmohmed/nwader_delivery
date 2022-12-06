@@ -26,12 +26,10 @@ class Login extends StatelessWidget {
         child: Column(
           children: [
             //to give space from top
-            Expanded(
-              child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height/2,
-                  child: Image.asset('assets/icons/icon.png')),
-            ),
+            SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height/4,
+                child: Image.asset('assets/icons/logo.png')),
             SizedBox(
               height: 10,
             ),

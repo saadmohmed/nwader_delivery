@@ -98,14 +98,14 @@ class _OrderDetailsState extends State<OrderDetails>
           actions: [
             GestureDetector(
               onTap: () async {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Notifications()),
-                );              },
+                Navigator.pop(context,true);
+              },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.asset('assets/icons/alert-icon.png'),
+                child: Icon(
+                  Icons.arrow_forward_sharp,
+                  color: AppTheme.green,
+                ),
               ),
             ),
 
