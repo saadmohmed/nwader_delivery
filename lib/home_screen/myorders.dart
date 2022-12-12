@@ -288,7 +288,7 @@ class _OrderBodyState extends State<OrderBody> with SingleTickerProviderStateMix
                           color: AppTheme.white,
                         ),
                       ),),
-                         SizedBox(width: MediaQuery.of(context).size.width/8.5,),
+                         SizedBox(width: MediaQuery.of(context).size.width/9.5,),
                       Container(
                         width: MediaQuery.of(context).size.width/3,
                         decoration: const BoxDecoration(
