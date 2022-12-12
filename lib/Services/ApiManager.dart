@@ -29,7 +29,40 @@ class ApiProvider {
     }
     return ads;
   }
+  Future getPage(page) async {
+    final storage = new FlutterSecureStorage();
 
+    final http.Response response = await http.get(
+      Uri.parse('${GET_PAGE}/'+page),
+      headers: <String, String>{
+        'Accept': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+      },
+    );
+    print(json.decode(response.body));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data;
+    }
+    return null;
+  }
+  Future get_config() async {
+    final storage = new FlutterSecureStorage();
+
+    final http.Response response = await http.get(
+      Uri.parse('${CONFIGURATION}'),
+      headers: <String, String>{
+        'Accept': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+      },
+    );
+    print(json.decode(response.body));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data;
+    }
+    return null;
+  }
   Future cat_wtith_products() async {
     final storage = new FlutterSecureStorage();
     final api_token = await storage.read(

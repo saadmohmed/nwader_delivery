@@ -9,6 +9,7 @@ import '../Services/ApiManager.dart';
 import '../app_theme.dart';
 import '../auth_screen/Login.dart';
 // import '../home_screen/home_screen.dart';
+import '../home_screen/info_page.dart';
 import '../profile/profile.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -174,7 +175,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   },
                   child: Row(
                     children: [
-                      Image.asset('assets/icons/alert-icon.png'),
+                      Image.asset('assets/icons/snapchat-icon.png'),
                       SizedBox(
                         width: 10,
                       ),
@@ -197,50 +198,74 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 SizedBox(
                   height: 10,
                 ),
-                Row(
-                  children: [
-                    Image.asset('assets/icons/info-icon.png'),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'عن التطبيق',
-                      style: GoogleFonts.getFont(
-                        AppTheme.fontName,
-                        textStyle: TextStyle(
-                          fontFamily: AppTheme.fontName,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18,
-                          letterSpacing: 0.5,
-                          color: AppTheme.white,
-                        ),
+                GestureDetector(
+                  onTap: ()async{
+                    dynamic data = await  _apiProvider.getPage('get_about_page');
+                    if(data['status'] == true){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PageInfo(page_title: data['page']['title'], page_body:data['page']['text'])),
+                      );
+                    }
+
+                  },
+                  child: Row(
+                    children: [
+                      Image.asset('assets/icons/info-icon.png'),
+                      SizedBox(
+                        width: 10,
                       ),
-                    )
-                  ],
+                      Text(
+                        'عن التطبيق',
+                        style: GoogleFonts.getFont(
+                          AppTheme.fontName,
+                          textStyle: TextStyle(
+                            fontFamily: AppTheme.fontName,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18,
+                            letterSpacing: 0.5,
+                            color: AppTheme.white,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                Row(
-                  children: [
-                    Image.asset('assets/icons/info-icon.png'),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'سياسة التطبيق',
-                      style: GoogleFonts.getFont(
-                        AppTheme.fontName,
-                        textStyle: TextStyle(
-                          fontFamily: AppTheme.fontName,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18,
-                          letterSpacing: 0.5,
-                          color: AppTheme.white,
-                        ),
+                GestureDetector(
+                  onTap: ()async{
+                    dynamic data = await  _apiProvider.getPage('get_polices_page');
+                    if(data['status'] == true){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PageInfo(page_title: data['page']['title'], page_body:data['page']['text'])),
+                      );
+                    }
+
+                  },
+                  child: Row(
+                    children: [
+                      Image.asset('assets/icons/info-icon.png'),
+                      SizedBox(
+                        width: 10,
                       ),
-                    )
-                  ],
+                      Text(
+                        'سياسة التطبيق',
+                        style: GoogleFonts.getFont(
+                          AppTheme.fontName,
+                          textStyle: TextStyle(
+                            fontFamily: AppTheme.fontName,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18,
+                            letterSpacing: 0.5,
+                            color: AppTheme.white,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 10,

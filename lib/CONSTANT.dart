@@ -24,3 +24,7 @@ const ADD_TO_CART= '${BASE_URL}/api/user/add_remove_cart';
 const GET_CART = '${BASE_URL}/api/user/get_user_cart';
 const UPDATE_PROFILE = '${BASE_URL}/api/user/update_profile';
 const UPDATE_PASSWORD = '${BASE_URL}/api/user/change_password';
+const USER_NOTIFICATION = '${BASE_URL}/api/user/get_user_notifications';
+
+const CONFIGURATION = '${BASE_URL}/api/user/get_configuration';
+const GET_PAGE = '${BASE_URL}/api/user';
