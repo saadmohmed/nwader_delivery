@@ -117,24 +117,35 @@ class Login extends StatelessWidget {
                   ),
                   child: InkWell(
                     onTap: () async {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MyOrders()),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) => MyOrders()),
+                      // );
                       if (_formKey.currentState!.validate()) {
 
                         ApiProvider _api = new ApiProvider();
                         dynamic _loginData =
                             await _api.login(username.text, password.text);
+                        print(_loginData);
                         final storage = new FlutterSecureStorage();
                         if (_loginData['status'] == true) {
-                          dynamic data = _loginData['user_data'];
+                          dynamic data = _loginData['driver_data'];
                           await storage.write(key: 'name', value: data['name']);
                           await storage.write(
                               key: 'id', value: data['id'].toString());
                           await storage.write(
                               key: 'email', value: data['email']);
+                          await storage.write(
+                              key: 'gov_id', value: data['gov_id'].toString());
+                          await storage.write(
+                              key: 'gov_division_id', value: data['gov_division_id'].toString());
+                          await storage.write(
+                              key: 'license_thumbnail', value: data['license_thumbnail'].toString());
+                          await storage.write(
+                              key: 'image_url', value: data['image_url'].toString());
+                          await storage.write(
+                              key: 'identity_thumbnail', value: data['identity_thumbnail'].toString());
                           await storage.write(
                               key: 'token', value: data['token']);
                           await storage.write(

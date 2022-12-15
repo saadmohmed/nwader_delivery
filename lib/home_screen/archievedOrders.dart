@@ -2,20 +2,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nwader_devlivery/home_screen/myorders.dart';
 import 'package:nwader_devlivery/home_screen/notifications.dart';
 import 'package:nwader_devlivery/home_screen/orderDetails.dart';
 
 import '../Services/ApiManager.dart';
 import '../app_theme.dart';
 import '../custom_drawer/Drawer.dart';
-import 'archievedOrders.dart';
 
-class MyOrders extends StatefulWidget {
+class MyArchievedOrders extends StatefulWidget {
   @override
-  State<MyOrders> createState() => _MyOrdersState();
+  State<MyArchievedOrders> createState() => _MyArchievedOrdersState();
 }
 
-class _MyOrdersState extends State<MyOrders>
+class _MyArchievedOrdersState extends State<MyArchievedOrders>
     with TickerProviderStateMixin {
   List<Widget> listViews = <Widget>[];
   final ScrollController scrollController = ScrollController();
@@ -127,24 +127,24 @@ class _MyOrdersState extends State<MyOrders>
                   );
                   },
                   child: Container(
-                      width: MediaQuery.of(context).size.width/2,
-                      decoration: const BoxDecoration(
-                        color: AppTheme.green,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Center(child: Text('طلبات جديدة' ,
-                          style: GoogleFonts.getFont(
-                            AppTheme.fontName,
-                            textStyle: TextStyle(
-                              fontFamily: AppTheme.fontName,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16,
-                              letterSpacing: 0.5,
-                              color: AppTheme.white,
-                            ),
-                          ),)),
-                      ),
+                    width: MediaQuery.of(context).size.width/2,
+                    decoration: const BoxDecoration(
+                      color: AppTheme.background_c,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(child: Text('طلبات جديدة' ,
+                        style: GoogleFonts.getFont(
+                          AppTheme.fontName,
+                          textStyle: TextStyle(
+                            fontFamily: AppTheme.fontName,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                            letterSpacing: 0.5,
+                            color: AppTheme.green,
+                          ),
+                        ),)),
+                    ),
                   ),
                 ),
                   GestureDetector(
@@ -156,11 +156,11 @@ class _MyOrdersState extends State<MyOrders>
                       );
                     },
                     child: Container(
-                        width: MediaQuery.of(context).size.width/2,
-                        decoration: const BoxDecoration(
-                          color: AppTheme.background_c,
-                        )
-                    ,                    child: Padding(
+                      width: MediaQuery.of(context).size.width/2,
+                      decoration: const BoxDecoration(
+                        color: AppTheme.green,
+                      )
+                      ,                    child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Center(child: Text('طلبات  مؤرشفة', style: GoogleFonts.getFont(
                         AppTheme.fontName,
@@ -169,7 +169,7 @@ class _MyOrdersState extends State<MyOrders>
                           fontWeight: FontWeight.w700,
                           fontSize: 16,
                           letterSpacing: 0.5,
-                          color: AppTheme.green,
+                          color: AppTheme.white,
                         ),
                       ),)),
                     ),
@@ -182,9 +182,10 @@ class _MyOrdersState extends State<MyOrders>
                   Column(
                     children: <Widget>[
                       FutureBuilder(
-                        future: _api.get_driver_order(),
+                        future: _api.get_driver_archieved_order(),
                         builder: (context, snapshot) {
                           if(snapshot.hasData){
+                            print(snapshot.data);
 
                             dynamic data = snapshot.data ;
                             if(data['status'] == true){
@@ -336,54 +337,54 @@ class _OrderBodyState extends State<OrderBody> with SingleTickerProviderStateMix
                       color: AppTheme.grey,
                     ),
                   )),
-                    Row(children: [
-                      Text("حالة الطلب :  ${widget.status}",   style: GoogleFonts.getFont(
-                        AppTheme.fontName,
-                        textStyle: TextStyle(
-                          fontFamily: AppTheme.fontName,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 12,
-                          letterSpacing: 0.5,
-                          color: AppTheme.white,
-                        ),
-                      ),),
-                         SizedBox(width: MediaQuery.of(context).size.width/11,),
-                      Container(
-                        width: MediaQuery.of(context).size.width/3,
-                        decoration: const BoxDecoration(
-                          color: AppTheme.white,
-                        ),
-                        child: GestureDetector(
-                          onTap: ()async{
-                            ApiProvider _api = new ApiProvider();
-                            dynamic data = await _api.get_order(widget.id.toString());
-                            if(data['status'] == true){
+                  Row(children: [
+                    Text("حالة الطلب :  ${widget.status}",   style: GoogleFonts.getFont(
+                      AppTheme.fontName,
+                      textStyle: TextStyle(
+                        fontFamily: AppTheme.fontName,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12,
+                        letterSpacing: 0.5,
+                        color: AppTheme.white,
+                      ),
+                    ),),
+                    SizedBox(width: MediaQuery.of(context).size.width/11,),
+                    Container(
+                      width: MediaQuery.of(context).size.width/3,
+                      decoration: const BoxDecoration(
+                        color: AppTheme.white,
+                      ),
+                      child: GestureDetector(
+                        onTap: ()async{
+    ApiProvider _api = new ApiProvider();
+    dynamic data = await _api.get_order(widget.id.toString());
+    print(data);
+    if(data['status'] == true) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => OrderDetails(order: data['order'],)),
+      );
+    }
+                        },
 
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => OrderDetails(order: data['order'],)),
-                              );
-                            }
-
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(child: Text('عرض تفاصيل الطلب' ,
-                              style: GoogleFonts.getFont(
-                                AppTheme.fontName,
-                                textStyle: TextStyle(
-                                  fontFamily: AppTheme.fontName,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 9,
-                                  letterSpacing: 0.5,
-                                  color: AppTheme.green,
-                                ),
-                              ),)),
-                          ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(child: Text('عرض تفاصيل الطلب' ,
+                            style: GoogleFonts.getFont(
+                              AppTheme.fontName,
+                              textStyle: TextStyle(
+                                fontFamily: AppTheme.fontName,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 9,
+                                letterSpacing: 0.5,
+                                color: AppTheme.green,
+                              ),
+                            ),)),
                         ),
-                      )
-                    ],),
+                      ),
+                    )
+                  ],),
 
                 ],
               ),
