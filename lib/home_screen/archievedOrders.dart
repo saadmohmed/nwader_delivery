@@ -338,17 +338,19 @@ class _OrderBodyState extends State<OrderBody> with SingleTickerProviderStateMix
                     ),
                   )),
                   Row(children: [
-                    Text("حالة الطلب :  ${widget.status}",   style: GoogleFonts.getFont(
-                      AppTheme.fontName,
-                      textStyle: TextStyle(
-                        fontFamily: AppTheme.fontName,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12,
-                        letterSpacing: 0.5,
-                        color: AppTheme.white,
-                      ),
-                    ),),
-                    SizedBox(width: MediaQuery.of(context).size.width/13,),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width/2.3,
+                      child: Text("حالة الطلب :  ${widget.status}",   style: GoogleFonts.getFont(
+                        AppTheme.fontName,
+                        textStyle: TextStyle(
+                          fontFamily: AppTheme.fontName,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12,
+                          letterSpacing: 0.5,
+                          color: AppTheme.white,
+                        ),
+                      ),),
+                    ),
                     Container(
                       width: MediaQuery.of(context).size.width/3,
                       decoration: const BoxDecoration(
@@ -356,18 +358,18 @@ class _OrderBodyState extends State<OrderBody> with SingleTickerProviderStateMix
                       ),
                       child: GestureDetector(
                         onTap: ()async{
-    ApiProvider _api = new ApiProvider();
-    dynamic data = await _api.get_order(widget.id.toString());
-    print(data);
-    if(data['status'] == true) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => OrderDetails(order: data['order'],)),
-      );
-    }
-                        },
+                          ApiProvider _api = new ApiProvider();
+                          dynamic data = await _api.get_order(widget.id.toString());
+                          if(data['status'] == true){
 
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => OrderDetails(order: data['order'],)),
+                            );
+                          }
+
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Center(child: Text('عرض تفاصيل الطلب' ,
