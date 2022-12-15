@@ -270,54 +270,54 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 SizedBox(
                   height: 10,
                 ),
-                Row(
-                  children: [
-                    Image.asset('assets/icons/chat-icon.png'),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'تواصل معنا',
-                      style: GoogleFonts.getFont(
-                        AppTheme.fontName,
-                        textStyle: TextStyle(
-                          fontFamily: AppTheme.fontName,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18,
-                          letterSpacing: 0.5,
-                          color: AppTheme.white,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Image.asset('assets/icons/order-icon-2.png'),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'طلباتي',
-                      style: GoogleFonts.getFont(
-                        AppTheme.fontName,
-                        textStyle: TextStyle(
-                          fontFamily: AppTheme.fontName,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18,
-                          letterSpacing: 0.5,
-                          color: AppTheme.white,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
+                // Row(
+                //   children: [
+                //     Image.asset('assets/icons/chat-icon.png'),
+                //     SizedBox(
+                //       width: 10,
+                //     ),
+                //     Text(
+                //       'تواصل معنا',
+                //       style: GoogleFonts.getFont(
+                //         AppTheme.fontName,
+                //         textStyle: TextStyle(
+                //           fontFamily: AppTheme.fontName,
+                //           fontWeight: FontWeight.w700,
+                //           fontSize: 18,
+                //           letterSpacing: 0.5,
+                //           color: AppTheme.white,
+                //         ),
+                //       ),
+                //     )
+                //   ],
+                // ),
+                // SizedBox(
+                //   height: 10,
+                // ),
+                // Row(
+                //   children: [
+                //     Image.asset('assets/icons/order-icon-2.png'),
+                //     SizedBox(
+                //       width: 10,
+                //     ),
+                //     Text(
+                //       'طلباتي',
+                //       style: GoogleFonts.getFont(
+                //         AppTheme.fontName,
+                //         textStyle: TextStyle(
+                //           fontFamily: AppTheme.fontName,
+                //           fontWeight: FontWeight.w700,
+                //           fontSize: 18,
+                //           letterSpacing: 0.5,
+                //           color: AppTheme.white,
+                //         ),
+                //       ),
+                //     )
+                //   ],
+                // ),
+                // SizedBox(
+                //   height: 10,
+                // ),
                 FutureBuilder<dynamic>(
                   future: _apiProvider.getName(),
                   builder:
