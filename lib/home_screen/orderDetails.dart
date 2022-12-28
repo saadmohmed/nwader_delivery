@@ -8,6 +8,7 @@ import 'package:location/location.dart';
 import '../Services/ApiManager.dart';
 import '../app_theme.dart';
 import '../custom_drawer/Drawer.dart';
+import 'navigation_screen.dart';
 import 'notifications.dart';
 import 'order_tracking_page.dart';
 
@@ -317,7 +318,7 @@ class _OrderDetailsState extends State<OrderDetails>
 
 
                             SizedBox(width: MediaQuery.of(context).size.width/12,),
-                            Container(
+                            widget.order["status_id"] == 4 ?    Container(
                               decoration: const BoxDecoration(
                                 color: AppTheme.orange,
                               ),
@@ -329,12 +330,21 @@ class _OrderDetailsState extends State<OrderDetails>
                                     location.getLocation().then((location){
                                       print(location.longitude);
                                       print(widget.order['address']['lat']);
+                                      if(location != null){
+                                        // Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //       builder: (context) =>NavigationScreen(widget.order['address']['lat'] ,widget.order['address']['lat'],
+                                        //       LatLng(location!.latitude! , location!.longitude!))),
+                                        // );
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => OrderTrackingPage(latlng: LatLng(widget.order['address']['lat'] ,
+                                                  widget.order['address']['lng']), order_id: widget.order['id'].toString(),myLocation:LatLng(location!.latitude! , location!.longitude!))),
+                                        );
+                                      }
 
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => OrderTrackingPage(latlng: LatLng(widget.order['address']['lat'] , widget.order['address']['lng']),)),
-                                      );
                                     });
 
                                   }
@@ -345,7 +355,7 @@ class _OrderDetailsState extends State<OrderDetails>
                                   child: Center(child: Icon(Icons.location_on_outlined ,color: AppTheme.white,)),
                                 ),
                               ),
-                            )
+                            ) : SizedBox()
 
                           ],
                         ),

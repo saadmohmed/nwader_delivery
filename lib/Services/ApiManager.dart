@@ -120,7 +120,7 @@ class ApiProvider {
     }
     return null;
   }
-  Future update_driver_location(String lat , String lng) async {
+  Future update_driver_location(String lat , String lng , String order_id) async {
     final storage = new FlutterSecureStorage();
     final api_token = await storage.read(
       key: 'token',
@@ -134,7 +134,7 @@ class ApiProvider {
       url =   Uri.parse('${UPDATE_DRIVER_LOCATION}?driver_id='+user_id!);
     }
     final http.Response response = await http.post(
-      Uri.parse('${CHANGE_ORDER_STATUS}'),
+      Uri.parse('${UPDATE_DRIVER_LOCATION}'),
       headers: <String, String>{
         'Accept': 'application/json; charset=UTF-8',
         'Access-Control-Allow-Origin': '*',
@@ -144,7 +144,8 @@ class ApiProvider {
       body: {
         'driver_id': user_id,
         'lat': lat,
-        'lng':lng
+        'lng':lng,
+        'order_id':order_id
       },
     );
 
@@ -327,6 +328,38 @@ class ApiProvider {
     }
     return null;
   }
+  Future<bool> checkAuth() async {
+    final storage = new FlutterSecureStorage();
+    final api_token = await storage.read(
+      key: 'token',
+    );
+    final user_id = await storage.read(
+      key: 'id',
+    );
+    try {
+      final http.Response response = await http.get(
+        Uri.parse(USER_API +'?driver_id='+user_id!),
+        headers: <String, String>{
+          'Accept': 'application/json; charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
+
+        },
+      );
+      dynamic data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        if(data["status"] == true){
+          return true;
+        }
+        return false;
+      }
+    } catch (e) {
+      print(e);
+      return false;
+    }
+
+    return false;
+  }
 
   Future<dynamic> user() async {
     final storage = new FlutterSecureStorage();
@@ -381,7 +414,32 @@ class ApiProvider {
     );
     return jsonDecode(addresses!);
   }
+  Future update_device_key(token) async {
+    final storage = new FlutterSecureStorage();
+    final api_token = await storage.read(
+      key: 'token',
+    );
 
+    final user_id = await storage.read(
+      key: 'id',
+    );
+    if(user_id != null){
+      final http.Response response = await http.post(
+        Uri.parse('${UPDATE_DEVICE_KEY}'),
+        headers: <String, String>{
+          'Accept': 'application/json; charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
+        },
+        body: {
+          'driver_id': user_id,
+          'device_key' : token
+        },
+      );
+      print(json.decode(response.body));
+    }
+
+  }
   Future logout() async {
     final storage = new FlutterSecureStorage();
      await storage.deleteAll();

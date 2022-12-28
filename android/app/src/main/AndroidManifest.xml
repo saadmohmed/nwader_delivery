@@ -1,9 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.nwader_delivery">
    <application
-        android:label="nwader_delivery"
+        android:label="مندوب التوصيل"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyCWNY4Dvhl7BNyihg4BvQK6pkILcQe91zw"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -21,3 +21,4 @@ const GET_ARCHIEVED_ORDERS = '${BASE_URL}/api/driver/get_archived_orders';
 const GET_ORDER_DETAILS = '${BASE_URL}/api/driver/get_order_details';
 const CHANGE_ORDER_STATUS = '${BASE_URL}/api/driver/change_order_status';
 const UPDATE_DRIVER_LOCATION = '${BASE_URL}/api/driver/UpdateDriverLocation';
+const UPDATE_DEVICE_KEY = '${BASE_URL}/api/driver/update_device_key';

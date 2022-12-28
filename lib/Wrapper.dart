@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../home_screen/home_screen.dart';
+import 'package:nwader_devlivery/home_screen/myorders.dart';
 
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,7 +28,7 @@ class _WrapperState extends State<Wrapper> {
 
   Widget build(BuildContext context) => Scaffold(
         body: FutureBuilder<bool>(
-            future: _api.user(), // a previously-obtained Future<String> or null
+            future: _api.checkAuth(), // a previously-obtained Future<String> or null
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 print(snapshot.data);
@@ -38,7 +38,7 @@ class _WrapperState extends State<Wrapper> {
                     scheduleMicrotask(() {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                        MaterialPageRoute(builder: (context) => MyOrders()),
                       );
                     });
                   }
