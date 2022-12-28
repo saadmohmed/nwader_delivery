@@ -2,11 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 import '../Services/ApiManager.dart';
 import '../app_theme.dart';
 import '../custom_drawer/Drawer.dart';
 import 'notifications.dart';
+import 'order_tracking_page.dart';
 
 class OrderDetails extends StatefulWidget {
   const OrderDetails({Key? key , required this.order}) : super(key: key);
@@ -68,6 +71,7 @@ class _OrderDetailsState extends State<OrderDetails>
 
   @override
   Widget build(BuildContext context) {
+    print(widget.order);
     return Container(
       color: AppTheme.background,
       child: Scaffold(
@@ -319,11 +323,22 @@ class _OrderDetailsState extends State<OrderDetails>
                               ),
                               child: GestureDetector(
                                 onTap: ()async{
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //       builder: (context) => OrderDetails()),
-                                  // );
+                                  print('llll' +widget.order.toString());
+                                  if(widget.order['address']['lat'] > 0 && widget.order['address']['lng']  > 0){
+                                    Location location = Location();
+                                    location.getLocation().then((location){
+                                      print(location.longitude);
+                                      print(widget.order['address']['lat']);
+
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => OrderTrackingPage(latlng: LatLng(widget.order['address']['lat'] , widget.order['address']['lng']),)),
+                                      );
+                                    });
+
+                                  }
+
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -340,6 +355,98 @@ class _OrderDetailsState extends State<OrderDetails>
                   )
                   ,),
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width:MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    color: AppTheme.background_c,
+                  ),
+                  child:Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                     widget.order["status_id"] == 3 ?   GestureDetector(
+                       onTap: ()async{
+                         dynamic data = await _api.change_order_status(widget.order['id'].toString());
+                         print(data);
+                         if(data['status'] == true){
+                           dynamic data = await _api.get_order(widget.order['id'].toString());
+                           if(data['status'] == true){
+
+                             Navigator.pushReplacement(
+                               context,
+                               MaterialPageRoute(
+                                   builder: (context) => OrderDetails(order: data['order'],)),
+                             );
+                           }
+                         }
+                       },
+                       child: Container(
+                    decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(100)),
+                  color: AppTheme.green,
+                ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(child: Text('بدا التوصيل' ,
+                                style: GoogleFonts.getFont(
+                                  AppTheme.fontName,
+                                  textStyle: TextStyle(
+                                    fontFamily: AppTheme.fontName,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 14,
+                                    letterSpacing: 0.5,
+                                    color: AppTheme.white,
+                                  ),
+                                ),)),
+                            ),
+                          ),
+                     ) : SizedBox(),
+                        widget.order["status_id"] == 4 ?      GestureDetector(
+                          onTap: ()async{
+                            dynamic data = await _api.change_order_status(widget.order['id'].toString());
+                            print(data);
+                            if(data['status'] == true){
+                              dynamic data = await _api.get_order(widget.order['id'].toString());
+                              if(data['status'] == true){
+
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => OrderDetails(order: data['order'],)),
+                                );
+                              }
+                            }
+                          },
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(100)),
+                              color: AppTheme.green,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(child: Text('تم الأستلام' ,
+                                style: GoogleFonts.getFont(
+                                  AppTheme.fontName,
+                                  textStyle: TextStyle(
+                                    fontFamily: AppTheme.fontName,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 14,
+                                    letterSpacing: 0.5,
+                                    color: AppTheme.white,
+                                  ),
+                                ),)),
+                            ),
+                          ),
+                        ) : SizedBox(),
+
+                      ],
+                    ),
+                  )
+                  ,),
+              ),
 
             ],
           ),
@@ -350,146 +457,3 @@ class _OrderDetailsState extends State<OrderDetails>
 
 }
 
-class OrderBody extends StatefulWidget {
-  const OrderBody({Key? key , required this.order}) : super(key: key);
-  final dynamic order ;
-  @override
-  State<OrderBody> createState() => _OrderBodyState();
-}
-
-class _OrderBodyState extends State<OrderBody> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: ()async{
-
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            color: AppTheme.green,
-          ),
-          child: Row(children: [
-            Stack(
-              children: [
-                Container(
-                    height:90,
-                    width: 40,
-                    decoration: const BoxDecoration(
-                      color: AppTheme.green,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-
-                    )),
-                Positioned(
-                  top: 2,
-                  right: 22,
-                  child: Container(
-                      height:200,
-                      width:2,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(100)),
-                        color: AppTheme.white,
-                      )),
-                ),
-
-                Positioned(
-                  top: 30,
-                  right: 10,
-                  child: Container(    decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(100)),
-                    color: AppTheme.redAcc,
-                  ),child: Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: Image.asset('assets/icons/green-order.png'),
-                  )),
-                ),
-              ],
-            ),
-            SizedBox(width: 9,) ,
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(" رقم الطلب  ${widget.order['order_number']}",   style: GoogleFonts.getFont(
-                    AppTheme.fontName,
-                    textStyle: TextStyle(
-                      fontFamily: AppTheme.fontName,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                      letterSpacing: 0.5,
-                      color: AppTheme.white,
-                    ),
-                  ),),
-                  Text("12/98/2022     98:98 am",   style: GoogleFonts.getFont(
-                    AppTheme.fontName,
-                    textStyle: TextStyle(
-                      fontFamily: AppTheme.fontName,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                      letterSpacing: 0.5,
-                      color: AppTheme.grey,
-                    ),
-                  )),
-                  Row(children: [
-                    Text("حالة الطلب : تم التجهيز",   style: GoogleFonts.getFont(
-                      AppTheme.fontName,
-                      textStyle: TextStyle(
-                        fontFamily: AppTheme.fontName,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12,
-                        letterSpacing: 0.5,
-                        color: AppTheme.white,
-                      ),
-                    ),),
-                    SizedBox(width: MediaQuery.of(context).size.width/8,),
-                    Container(
-                      width: MediaQuery.of(context).size.width/3,
-                      decoration: const BoxDecoration(
-                        color: AppTheme.white,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Center(child: Text('عرض تفاصيل الطلب' ,
-                          style: GoogleFonts.getFont(
-                            AppTheme.fontName,
-                            textStyle: TextStyle(
-                              fontFamily: AppTheme.fontName,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12,
-                              letterSpacing: 0.5,
-                              color: AppTheme.green,
-                            ),
-                          ),)),
-                      ),
-                    )
-                  ],),
-
-                ],
-              ),
-            ),
-
-
-          ],),
-        ),
-      ),
-    );
-  }
-}

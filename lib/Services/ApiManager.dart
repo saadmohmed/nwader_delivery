@@ -120,13 +120,78 @@ class ApiProvider {
     }
     return null;
   }
+  Future update_driver_location(String lat , String lng) async {
+    final storage = new FlutterSecureStorage();
+    final api_token = await storage.read(
+      key: 'token',
+    );
+    final user_id = await storage.read(
+      key: 'id',
+    );
+
+    dynamic url =  Uri.parse('${UPDATE_DRIVER_LOCATION}');
+    if(user_id != null){
+      url =   Uri.parse('${UPDATE_DRIVER_LOCATION}?driver_id='+user_id!);
+    }
+    final http.Response response = await http.post(
+      Uri.parse('${CHANGE_ORDER_STATUS}'),
+      headers: <String, String>{
+        'Accept': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
+
+      },
+      body: {
+        'driver_id': user_id,
+        'lat': lat,
+        'lng':lng
+      },
+    );
+
+    return json.decode(response.body);
+
+    return null;
+  }
+
+  Future change_order_status(String order_id) async {
+    final storage = new FlutterSecureStorage();
+    final api_token = await storage.read(
+      key: 'token',
+    );
+    final user_id = await storage.read(
+      key: 'id',
+    );
+
+    dynamic url =  Uri.parse('${GET_ORDERS}');
+    if(user_id != null){
+      url =   Uri.parse('${CHANGE_ORDER_STATUS}?driver_id='+user_id!);
+    }
+    final http.Response response = await http.post(
+      Uri.parse('${CHANGE_ORDER_STATUS}'),
+      headers: <String, String>{
+        'Accept': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'X-Authorization' : 'Bearer '+(api_token == null ? '' : api_token)
+
+      },
+      body: {
+        'driver_id': user_id,
+        'order_id': order_id,
+      },
+    );
+
+    return json.decode(response.body);
+
+    return null;
+  }
 
   Future login(String email, String password) async {
     final http.Response response = await http.post(
       Uri.parse('${LOGIN_API}'),
       headers: <String, String>{
         'Accept': 'application/json; charset=UTF-8',
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*',
+
       },
       body: {
         'drivername': email,
