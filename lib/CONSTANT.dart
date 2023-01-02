@@ -1,4 +1,4 @@
-const BASE_URL = 'https://nwader.sa';
+const BASE_URL = 'http://nwader.ejad-dev.com';
 // const BASE_URL = 'http://10.0.2.2:8001';
 
 
