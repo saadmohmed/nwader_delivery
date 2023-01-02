@@ -1,0 +1,88 @@
+{
+  "project_info": {
+    "project_number": "702871066802",
+    "project_id": "nwader-697f7",
+    "storage_bucket": "nwader-697f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702871066802:android:7afbfa6aaa50de53bbd1ab",
+        "android_client_info": {
+          "package_name": "com.example.best_flutter_ui_templates"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "702871066802-3jln62dh1u3ggq5aesiumiv494l6ked6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4qebhyMJ_pUvwa6Un6pwm31QbYF7Q9qA"
+        },
+        {
+          "current_key": "AIzaSyCn9ojoPscl4WunDw5lQqepxss-wVCEQVU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "702871066802-3jln62dh1u3ggq5aesiumiv494l6ked6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "702871066802-aos8e4r72i7sp2btha58docstsjeqgnh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bestFlutterUiTemplates"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702871066802:android:57a9b46fe20585b8bbd1ab",
+        "android_client_info": {
+          "package_name": "com.example.nwader_delivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "702871066802-3jln62dh1u3ggq5aesiumiv494l6ked6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4qebhyMJ_pUvwa6Un6pwm31QbYF7Q9qA"
+        },
+        {
+          "current_key": "AIzaSyCn9ojoPscl4WunDw5lQqepxss-wVCEQVU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "702871066802-3jln62dh1u3ggq5aesiumiv494l6ked6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "702871066802-aos8e4r72i7sp2btha58docstsjeqgnh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bestFlutterUiTemplates"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
